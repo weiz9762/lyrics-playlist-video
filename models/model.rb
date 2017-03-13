@@ -2,7 +2,7 @@ require 'lyricfy'
 require 'rspotify'
 require 'pp'
 
-RSpotify.authenticate("9375f8f5f7d94a3587dcfe10dfd3fcb4", "22c027108f584733b27305cfb6056423")
+RSpotify.authenticate(ENV["SPOTIFY_CLIENT_ID"], ENV["SPOTIFY_CLIENT_SECRET"])
 
 
 # turn spotify user/playlist_id into playlist
