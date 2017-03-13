@@ -20,7 +20,6 @@ class ApplicationController < Sinatra::Base
     @user_playlist = Playlist.new(@user_name,@user_playlist_id)
     @user_playlist.get_info
     @user_playlist.get_all_lyrics
-    pp @user_playlist
     
     # @user_title = params[:title]
     # @user_artist = params[:artist]
