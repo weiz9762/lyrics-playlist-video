@@ -1,5 +1,9 @@
 require 'lyricfy'
-# require 'rspotify'
+require 'rspotify'
+require 'pp'
+
+RSpotify.authenticate("9375f8f5f7d94a3587dcfe10dfd3fcb4", "22c027108f584733b27305cfb6056423")
+
 
 # turn spotify user/playlist_id into playlist
 
@@ -45,6 +49,40 @@ end
 # spotify client secret
 # 22c027108f584733b27305cfb6056423
 
+playlist = RSpotify::Playlist.find('guilhermesad', '1Xi8mgiuHHPLQYOw2Q16xv')
+# pp playlist.tracks.first
+puts playlist.tracks.first.name
+puts playlist.tracks.first.artists.first.name
+puts playlist.tracks.first.album.images.first["url"]
 
 
 
+class Playlist
+    
+    attr_reader :user, :playlist_id, :name, :songs
+    
+    def initialize(user,playlist_id)
+        @user = user
+        @playlist_id = playlist_id
+        @songs = [] # instances of the Song class
+    end
+    
+    def get_info
+        playlist = RSpotify::Playlist.find(@user,@playlist_id)
+        @name = playlist.name
+        
+        playlist.tracks.each do |track|
+            @songs << Song.new(track.name,track.artists.first.name,track.album.images.first["url"])
+        end
+    end
+    
+    def get_all_lyrics
+        @songs.each do |song|
+            song.get_lyrics
+        end
+    end
+end
+
+# relaxing = Playlist.new("guilhermesad","1Xi8mgiuHHPLQYOw2Q16xv")
+# relaxing.get_info
+# pp relaxing.tracks
